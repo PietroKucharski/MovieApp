@@ -1,8 +1,8 @@
-import { TouchableWithoutFeedback, Image, Dimensions } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { TouchableWithoutFeedback, Image, Dimensions } from 'react-native'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../navigators/RootNavigator'
-import { useNavigation } from '@react-navigation/native'
 import { fallbackPersonImage, image500 } from '../../api/moviedb'
 
 type movieCard = {

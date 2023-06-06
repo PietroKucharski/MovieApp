@@ -1,3 +1,5 @@
+import Loading from '../components/Loading'
+import MovieList from '../components/MovieList'
 import { View, Text, Dimensions, Platform, ScrollView, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -6,8 +8,7 @@ import { HeartIcon } from 'react-native-heroicons/solid'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../navigators/RootNavigator'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import MovieList from '../components/MovieList'
-import Loading from '../components/Loading'
+import { fallbackPersonImage, fetchPersonDetails, fetchPersonMovies, image342 } from '../../api/moviedb'
 
 export default function PersonScreen() {
     const ios = Platform.OS === 'ios'
@@ -19,15 +20,31 @@ export default function PersonScreen() {
 
     const [isFavorite, setIsFavorite] = useState(false)
     const [personMovies, setPersonMovies] = useState([1, 2, 3, 4])
+    const [person, setPerson] = useState({})
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         setLoading(true)
         getPersonDetails(item.id)
+        getPersonMovies(item.id)
     }, [item])
 
     const getPersonDetails = async (id: number) => {
+        const data = await fetchPersonDetails(id)
+        if(data) {
+            setPerson(data)
+        }
+        setLoading(false)
+    }
 
+    const getPersonMovies = async (id: number) => {
+        const data = await fetchPersonMovies(id)
+
+        if(data && data.cast) {
+            setPersonMovies(data.cast)
+        }
+
+        setLoading(false)
     }
 
     return (
@@ -58,16 +75,20 @@ export default function PersonScreen() {
                             }}
                         >
                             <View className='items-center mt-4 rounded-full overflow-hidden h-72 w-72 border border-neutral-500'>
-                                <Image source={require('../assets/images/castImage2.png')} style={{ height: height * 0.43, width: width * 0.74 }}/>
+                                <Image source={{ uri: image342(person?.profile_path) || fallbackPersonImage }} style={{ height: height * 0.43, width: width * 0.74 }}/>
                                 
                             </View>
                         </View>
                         <View className='mt-6'>
                             <Text className='text-3xl text-white font-bold text-center'>
-                                Keanu Reeves
+                                {
+                                    person?.name
+                                }
                             </Text>
                             <Text className='text-3xl text-neutral-500 text-center'>
-                                London, United Kingdom
+                                {
+                                    person?.place_of_birth
+                                }
                             </Text>
                         </View>
                         <View className='mx-3 p-4 mt-6 flex-row justify-between items-center bg-neutral-700 rounded-full'>
@@ -76,7 +97,9 @@ export default function PersonScreen() {
                                     Gender
                                 </Text>
                                 <Text className='text-neutral-300 text-sm'>
-                                    Male
+                                    {
+                                        person?.gender === 1 ? 'Female' : 'Male' 
+                                    }
                                 </Text>
                             </View>
                             <View className='border-r-2 border-r-neutral-400 px-2 items-center'>
@@ -84,7 +107,9 @@ export default function PersonScreen() {
                                     Birthday
                                 </Text>
                                 <Text className='text-neutral-300 text-sm'>
-                                    1964-09-02
+                                    {
+                                        person?.birthday
+                                    }
                                 </Text>
                             </View>
                             <View className='border-r-2 border-r-neutral-400 px-2 items-center'>
@@ -92,7 +117,9 @@ export default function PersonScreen() {
                                     Known for
                                 </Text>
                                 <Text className='text-neutral-300 text-sm'>
-                                    Acting
+                                    {
+                                        person?.known_for_department
+                                    }
                                 </Text>
                             </View>
                             <View className='px-2 items-center'>
@@ -100,7 +127,9 @@ export default function PersonScreen() {
                                     Poularity
                                 </Text>
                                 <Text className='text-neutral-300 text-sm'>
-                                    64.23
+                                    {
+                                        person?.popularity.toFixed(2)
+                                    } %
                                 </Text>
                             </View>
                         </View>
@@ -109,9 +138,9 @@ export default function PersonScreen() {
                                 Biography
                             </Text>
                             <Text className='text-neutral-400 tracking-wide'>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo ipsa, dignissimos molestias placeat earum amet tempore impedit ad inventore quae laudantium ullam iusto distinctio illum perspiciatis dicta quia fuga aliquid.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo voluptatibus mollitia et. Reprehenderit blanditiis iure magni consectetur, ut odio nobis qui praesentium ab eos aliquam veniam laborum distinctio similique quaerat.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat dolorum, eos est inventore quia saepe iure autem ducimus dignissimos laborum veritatis, eveniet voluptates sapiente laudantium porro debitis! Nam, nostrum blanditiis.
+                                {
+                                    person?.biography || 'N/A'
+                                }
                             </Text>
                         </View>
         

@@ -1,10 +1,9 @@
 import React from 'react'
 import HomeScreen from '../screens/HomeScreen'
-import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack'
 import MovieScreen from '../screens/MovieScreen'
 import PersonScreen from '../screens/PersonScreen'
 import SearchScreen from '../screens/SearchScreen'
-
+import { NativeStackScreenProps, createNativeStackNavigator } from '@react-navigation/native-stack'
 
 export type RootStackParamList = {
   HomeScreen: undefined

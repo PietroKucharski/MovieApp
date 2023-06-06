@@ -10,7 +10,7 @@ import { style } from '../theme';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigators/RootNavigator';
 import { useNavigation } from '@react-navigation/native';
-import { fetchSimilarMovies, fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../../api/moviedb';
+import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../../api/moviedb';
 
 export default function HomeScreen() {
     const ios = Platform.OS === 'ios'
@@ -82,12 +82,12 @@ export default function HomeScreen() {
                     <Loading/>
                 ) : (
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 10 }}>
+
                         {/* Trending movies carousel */}
                         { trending.length > 0 && <TrendingMovies data={trending}/> }
 
                         {/* Upcoming movies row */}
                         { upcoming.length > 0 && <MovieList title='Upcoming' data={upcoming}/> }
-                        
 
                         {/* Upcoming movies row */}
                         { topRated.length > 0 && <MovieList title='Top Rated' data={topRated}/>}

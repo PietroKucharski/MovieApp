@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Image, Dimensions } from 'react-native'
 import React from 'react'
 import { style } from '../theme'
 import { RootStackParamList } from '../navigators/RootNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
 import { fallbackMoviePoster, image185 } from '../../api/moviedb'
+import { View, Text, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Image, Dimensions } from 'react-native'
 
 type movieListProps = {
   title: string,

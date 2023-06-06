@@ -1,9 +1,9 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../navigators/RootNavigator'
 import { useNavigation } from '@react-navigation/native'
+import { RootStackParamList } from '../navigators/RootNavigator'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { fallbackPersonImage, image185 } from '../../api/moviedb'
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
 
 type castProps = {
     cast: any
@@ -20,7 +20,7 @@ export default function Cast({cast}: castProps) {
             </Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
                 {
-                    cast && cast.map((person: any, index: any) => {
+                    cast && cast.map((person: any, index: number) => {
                         return (
                             <TouchableOpacity key={index} className='mr-4 items-center' onPress={() => navigation.navigate('PersonScreen', person)}>
                                 <View className='overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-500'>

@@ -1,7 +1,6 @@
-import { View, Text, Dimensions } from 'react-native'
 import React from 'react'
 import * as Progress from 'react-native-progress'
-import { theme } from '../theme'
+import { View, Dimensions } from 'react-native'
 
 export default function Loading() {
     var { width, height } = Dimensions.get('window')

@@ -12,15 +12,18 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../../api/moviedb'
 import MovieList from '../components/MovieList'
 
+type teste = {
+}
 
 export default function MovieScreen() {
     const ios = Platform.OS === 'ios'
     const topMargin = ios ? '' : 'mt-3'
-    const navigation: NativeStackNavigationProp<RootStackParamList> = useNavigation()
 
+    const navigation: NativeStackNavigationProp<RootStackParamList> = useNavigation()
+    
     var { width, height } = Dimensions.get('window')
     const { params: item } = useRoute()
-
+    
     const [cast, setCast] = useState([])
     const [similarMovies, setSimilarMovies] = useState([])
     const [isFavorite, setIsFavorite] = useState(false)
@@ -36,8 +39,10 @@ export default function MovieScreen() {
 
     const getMovieDetails = async (id: number) => {
         const data = await fetchMovieDetails(id)
+
         if(data) {
             setMovie(data)
+
         }
         setLoading(false)
     }

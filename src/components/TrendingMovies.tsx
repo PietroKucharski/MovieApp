@@ -3,7 +3,11 @@ import MovieCard from './MovieCard'
 import Carousel from 'react-native-snap-carousel'
 import { View, Text, Dimensions } from 'react-native'
 
-export default function TrendingMovies({data}: any) {
+type trendingMoviesProps = {
+    data: any
+}
+
+export default function TrendingMovies({data}: trendingMoviesProps) {
     var { width } = Dimensions.get('window')
 
     return (
