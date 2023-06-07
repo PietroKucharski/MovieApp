@@ -17,7 +17,6 @@ export default function MovieCard({item}: movieCard) {
     return (
         <TouchableWithoutFeedback  onPress={() => navigation.navigate('MovieScreen', {...item})}>
             <Image
-                // source={require('../assets/images/moviePoster1.png')}
                 source={{uri: image500(item.poster_path) || fallbackPersonImage }}
                 style={{ width: width * 0.6, height: height * 0.4 }}
                 className='rounded-3xl'

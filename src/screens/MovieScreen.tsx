@@ -1,5 +1,6 @@
 import Cast from '../components/Cast'
 import Loading from '../components/Loading'
+import MovieList from '../components/MovieList'
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView, TouchableOpacity, Dimensions, Platform, Image, Text } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -10,10 +11,6 @@ import { RootStackParamList } from '../navigators/RootNavigator'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { LinearGradient } from 'expo-linear-gradient'
 import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../../api/moviedb'
-import MovieList from '../components/MovieList'
-
-type teste = {
-}
 
 export default function MovieScreen() {
     const ios = Platform.OS === 'ios'
@@ -21,14 +18,14 @@ export default function MovieScreen() {
 
     const navigation: NativeStackNavigationProp<RootStackParamList> = useNavigation()
     
+    const { params: item } = useRoute<any>()
     var { width, height } = Dimensions.get('window')
-    const { params: item } = useRoute()
     
     const [cast, setCast] = useState([])
-    const [similarMovies, setSimilarMovies] = useState([])
-    const [isFavorite, setIsFavorite] = useState(false)
+    const [movie, setMovie] = useState<any>({})
     const [loading, setLoading] = useState(false)
-    const [movie, setMovie] = useState({})
+    const [isFavorite, setIsFavorite] = useState(false)
+    const [similarMovies, setSimilarMovies] = useState([])
 
     useEffect(() => {
         setLoading(true)
@@ -37,7 +34,7 @@ export default function MovieScreen() {
         getSimilarMovies(item.id)
     }, [item])
 
-    const getMovieDetails = async (id: number) => {
+    const getMovieDetails = async (id: string) => {
         const data = await fetchMovieDetails(id)
 
         if(data) {
@@ -47,7 +44,7 @@ export default function MovieScreen() {
         setLoading(false)
     }
 
-    const getMovieCredits = async (id: number) => {
+    const getMovieCredits = async (id: string) => {
         const data = await fetchMovieCredits(id)
 
         if(data && data.cast) {
@@ -56,7 +53,7 @@ export default function MovieScreen() {
         setLoading(false)
     }
     
-    const getSimilarMovies = async (id: number) => {
+    const getSimilarMovies = async (id: string) => {
         const data = await fetchSimilarMovies(id)
 
         if(data && data.results) {
@@ -70,7 +67,7 @@ export default function MovieScreen() {
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }} className='flex-1 bg-neutral-900'>
             {/* back button and movie poster */}
             <View className='w-full'>
-                <SafeAreaView className={'absolute z-20 w-full flex-row justify-between px-4 items-center' + topMargin}>
+                <SafeAreaView className={'absolute z-20 w-full flex-row justify-between px-4 mt-2 items-center' + topMargin}>
                     <TouchableOpacity onPress={() => navigation.goBack()} className='rounded-xl p-1 bg-[#eab308]'>
                         <ChevronLeftIcon size={28} strokeWidth={2.5} color='white'/>
                     </TouchableOpacity>
@@ -112,7 +109,7 @@ export default function MovieScreen() {
                 {
                     movie?.id ? (
                         <Text className='text-neutral-400 font-semibold text-base text-center'>
-                            { movie?.status } * { movie?.release_date?.split('-')[0] } * {movie?.runtime} min
+                            { movie?.status } - { movie?.release_date?.split('-')[0] } - {movie?.runtime} min
                         </Text>
                     ) : null
                 }

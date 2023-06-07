@@ -15,12 +15,12 @@ export default function PersonScreen() {
     const verticalMargin = ios ? '' : 'my-3'
     const navigation: NativeStackNavigationProp<RootStackParamList> = useNavigation()
     
-    const {params: item} = useRoute()
+    const {params: item} = useRoute<any>()
     var { width, height } = Dimensions.get('window')
 
     const [isFavorite, setIsFavorite] = useState(false)
     const [personMovies, setPersonMovies] = useState([1, 2, 3, 4])
-    const [person, setPerson] = useState({})
+    const [person, setPerson] = useState<any>({})
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function PersonScreen() {
         getPersonMovies(item.id)
     }, [item])
 
-    const getPersonDetails = async (id: number) => {
+    const getPersonDetails = async (id: string) => {
         const data = await fetchPersonDetails(id)
         if(data) {
             setPerson(data)
@@ -37,7 +37,7 @@ export default function PersonScreen() {
         setLoading(false)
     }
 
-    const getPersonMovies = async (id: number) => {
+    const getPersonMovies = async (id: string) => {
         const data = await fetchPersonMovies(id)
 
         if(data && data.cast) {

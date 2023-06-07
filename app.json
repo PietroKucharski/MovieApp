@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MovieApp",
-    "slug": "MovieApp",
+    "slug": "movieapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.pietrokucharski.movieapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b9bfc1e7-f2a0-4f58-b86f-8e3003f0faaa"
+      }
+    },
+    "owner": "pietrokucharski"
   }
 }

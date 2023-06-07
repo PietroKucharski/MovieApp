@@ -11,6 +11,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigators/RootNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../../api/moviedb';
+import { RootDrawerParamList } from '../navigators/DrawerNavigator';
+import { DrawerNavigationProp } from "@react-navigation/drawer"
+
 
 export default function HomeScreen() {
     const ios = Platform.OS === 'ios'
@@ -21,6 +24,7 @@ export default function HomeScreen() {
     const [topRated, setToRated] = useState([])
 
     const navigation: NativeStackNavigationProp<RootStackParamList> = useNavigation()
+    const drawerNavigation: DrawerNavigationProp<RootDrawerParamList> = useNavigation()
 
     const getTrendingMovies = async () => {
         const data = await fetchTrendingMovies()
@@ -30,10 +34,8 @@ export default function HomeScreen() {
         }
         setLoading(false)
     }
-
-    
+ 
     const getUpcomingMovies = async () => {
-        console.log('aqui')
         const data = await fetchUpcomingMovies()
 
         if(data && data.results) {
@@ -66,7 +68,7 @@ export default function HomeScreen() {
             <SafeAreaView className={ios ? '-mb-2' : 'mb-3'}>
                 <StatusBar style='light'/>
                 <View className='flex-row justify-between items-center mx-4'>
-                    <Bars3CenterLeftIcon size={30} strokeWidth={2} color='white'/>
+                    <Bars3CenterLeftIcon onPress={() => drawerNavigation.openDrawer()} size={30} strokeWidth={2} color='white'/>
                     <Text className='text-white text-3xl font-bold'>
                         <Text style={style.text}> 
                             M

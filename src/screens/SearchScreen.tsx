@@ -1,3 +1,4 @@
+import Loading from '../components/Loading'
 import { View, Text, Dimensions, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Image } from 'react-native'
 import React, { useState, useCallback } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -5,13 +6,10 @@ import { XMarkIcon } from 'react-native-heroicons/outline'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../navigators/RootNavigator'
 import { useNavigation } from '@react-navigation/native'
-import Loading from '../components/Loading'
 import { debounce } from 'lodash'
 import { fallbackMoviePoster, fetchSearchMovies, image185 } from '../../api/moviedb'
 
 export default function SearchScreen() {
-    let movieName = 'Ant-Man and the Wasp: Quantumania'
-
     var { width, height } = Dimensions.get('window')
 
     const navigation: NativeStackNavigationProp<RootStackParamList> = useNavigation()
@@ -66,7 +64,7 @@ export default function SearchScreen() {
                             </Text>
                             <View className='flex-row justify-between flex-wrap'>
                                 {
-                                    results.map((item, index) => {
+                                    results.map((item: any, index: number) => {
                                         return (
                                             <TouchableWithoutFeedback key={index} onPress={() => navigation.push('MovieScreen', item)}>
                                                 <View className='space-y-2 mb-4'>
